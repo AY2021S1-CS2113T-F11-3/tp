@@ -2,6 +2,7 @@ package commands;
 
 import access.Access;
 import exception.InvalidInputException;
+import exception.StorageDataException;
 import manager.history.History;
 import storage.Storage;
 import ui.Ui;
@@ -53,7 +54,8 @@ public class HistoryCommand extends Command {
      * @param reviseIndex to get which chapter have revised
      * @throws IOException if there is an error writing to the storage file
      */
-    public static void addHistory(Access access, Storage storage, int reviseIndex) throws IOException {
+    public static void addHistory(Access access, Storage storage, int reviseIndex)
+            throws IOException, StorageDataException {
         LocalDate date = java.time.LocalDate.now();
         storage.createHistory(date.toString());
         String moduleName = access.getModule().getModuleName();

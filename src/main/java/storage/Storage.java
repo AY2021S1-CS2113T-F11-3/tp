@@ -40,7 +40,7 @@ public class Storage {
 
     //@@author gua-guargia
     //create the folder --> 'data/admin'
-    public void createAdmin() {
+    public void createAdmin() throws StorageDataException {
         File f = new File(filePath);
         logger.info("Filepath: " + filePath);
 
@@ -51,13 +51,13 @@ public class Storage {
     }
 
     //@@author gua-guargia
-    public void createModule(String moduleName) {
+    public void createModule(String moduleName) throws StorageDataException {
         File f = new File(filePath + "/" + moduleName);
         StorageWrite.createDir(f);
     }
 
     //@@author gua-guargia
-    public void createChapter(String chapterName, String moduleName) throws IOException {
+    public void createChapter(String chapterName, String moduleName) throws IOException, StorageDataException {
         File f = new File(filePath + "/" + moduleName + "/" + chapterName + ".txt");
         StorageWrite.createFile(f);
     }
@@ -144,7 +144,7 @@ public class Storage {
         StorageWrite.renameModule(newModuleName, module, filePath);
     }
 
-    public void createHistory(String date) throws IOException {
+    public void createHistory(String date) throws IOException, StorageDataException {
         StorageWrite.createHistory(date);
     }
 

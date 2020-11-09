@@ -1,6 +1,7 @@
 package commands;
 
 import access.Access;
+import exception.StorageDataException;
 import storage.Storage;
 import ui.Ui;
 
@@ -30,7 +31,7 @@ public abstract class AddCommand extends Command {
     public static final String MESSAGE_COUNT = "Now you have %1$d %2$s(s) in the list.";
 
     @Override
-    public abstract void execute(Ui ui, Access access, Storage storage) throws IOException;
+    public abstract void execute(Ui ui, Access access, Storage storage) throws IOException, StorageDataException;
 
     /**
      * Constructs the result of the command execution.

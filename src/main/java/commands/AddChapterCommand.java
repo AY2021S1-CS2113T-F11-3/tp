@@ -1,6 +1,7 @@
 package commands;
 
 import access.Access;
+import exception.StorageDataException;
 import manager.chapter.Chapter;
 import manager.module.ChapterList;
 import manager.module.Module;
@@ -32,7 +33,7 @@ public class AddChapterCommand extends AddCommand {
     }
 
     @Override
-    public void execute(Ui ui, Access access, Storage storage) throws IOException {
+    public void execute(Ui ui, Access access, Storage storage) throws IOException, StorageDataException {
         Chapter chapter = new Chapter(this.chapter);
         String result = addChapter(access, storage, chapter);
         ui.showToUser(result);
@@ -47,7 +48,8 @@ public class AddChapterCommand extends AddCommand {
      * @return result to be displayed
      * @throws IOException if there is an error writing to the storage file
      */
-    private String addChapter(Access access, Storage storage, Chapter chapter) throws IOException {
+    private String addChapter(Access access, Storage storage, Chapter chapter)
+            throws IOException, StorageDataException {
         Module newModule = access.getModule();
         ChapterList chapters = newModule.getChapters();
         boolean isChapterExist = chapters.checkChapterExistence(chapter.getChapterName().toLowerCase());

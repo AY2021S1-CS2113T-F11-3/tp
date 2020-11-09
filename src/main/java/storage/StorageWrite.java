@@ -30,30 +30,36 @@ public class StorageWrite {
     public static final String DIR = "directory";
 
     //@@author gua-guargia
-    protected static void createDir(File f) {
+    protected static void createDir(File f) throws StorageDataException {
         boolean dirExists = f.exists();
         boolean dirCreated = false;
         if (!dirExists) {
             dirCreated = f.mkdir();
         } else {
             logger.info(String.format(MESSAGE_EXISTS, DIR, f));
+            throw new StorageDataException("The folder is already exist. Please check your directory.");
         }
         if (dirCreated) {
             logger.info(String.format(MESSAGE_CREATED, DIR, f));
+        } else {
+            throw new StorageDataException("Error creating new folder. Please check your directory.");
         }
     }
 
     //@@author gua-guargia
-    protected static void createFile(File f) throws IOException {
+    protected static void createFile(File f) throws IOException, StorageDataException {
         boolean fileExists = f.exists();
         boolean fileCreated = false;
         if (!fileExists) {
             fileCreated = f.createNewFile();
         } else {
             logger.info(String.format(MESSAGE_EXISTS, FILE, f));
+            throw new StorageDataException("The file is already exist. Please check your directory.");
         }
         if (fileCreated) {
             logger.info(String.format(MESSAGE_CREATED, FILE, f));
+        } else {
+            throw new StorageDataException("Error creating new file. Please check your directory.");
         }
     }
 
@@ -86,7 +92,7 @@ public class StorageWrite {
     }
 
     //@@author Zhu-Ze-Yu
-    public static void createHistoryDir() {
+    public static void createHistoryDir() throws StorageDataException {
         File f = new File("data/history");
         createDir(f);
     }
@@ -259,13 +265,16 @@ public class StorageWrite {
      *
      * @param date the date of the revision
      * @throws IOException if there is an error creating the storage file
+     * @throws StorageDataException if there is an error creating the storage file
      */
-    protected static void createHistory(String date) throws IOException {
+    protected static void createHistory(String date) throws IOException, StorageDataException {
         try {
             File f = new File("data/history/" + date + ".txt");
             createFile(f);
         } catch (IOException e) {
             throw new IOException("Error creating the data/history file.");
+        } catch (StorageDataException e) {
+            throw new StorageDataException("Error creating the new file.");
         }
     }
 
